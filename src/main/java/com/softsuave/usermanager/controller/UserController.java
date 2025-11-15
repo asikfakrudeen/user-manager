@@ -4,6 +4,7 @@ import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
 import com.softsuave.usermanager.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class UserController {
 
     @GetMapping("/getUserById")
     public ResponseEntity<UserResponse> getUserById(@RequestParam String id){
-        log.info("API hit successful and would return data for the ID : {} ",id);
+        log.info("API hit successful and would return data for this ID : {} ",id);
         UserResponse response =  userService.getUserById(id);
         log.info("Returning response : {} ", response.toString());
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -52,16 +53,41 @@ public class UserController {
 
     @GetMapping("/getUserByPermanentIdentificationNumber")
     public ResponseEntity<UserResponse> getUserByPin(@RequestParam Long pin){
-        log.info("API hit successful and would return data for the Permanent Identification Number : {} ",pin);
+        log.info("API hit successful and would return data for this Permanent Identification Number : {} ",pin);
         UserResponse response =  userService.getUserByPin(pin);
         log.info("Returning response : {} ", response.toString());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getUserByMobileNumber")
+    public ResponseEntity<UserResponse> getUserByMobileNumber(@RequestParam Long mobileNumber){
+        log.info("API hit successful and would return data for this mobile number : {} ",mobileNumber);
+        UserResponse response =  userService.getUserByMobileNumber(mobileNumber);
+        log.info("Returning response : {} ", response.toString());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/filter/{page}")
-    public ResponseEntity<List<UserResponse>> getUserByFilter(@PathVariable int page, @RequestParam String country, String state, String city){
+    public ResponseEntity<Page<UserResponse>> getUserByFilter(@PathVariable int page, @RequestParam String country, String state, String city){
         log.info("API hit successful and would return data for the filter");
-        List<UserResponse> responses =  userService.getUserByFilter(country, state, city, page);
+        Page<UserResponse> responses =  userService.getUserByFilter(country, state, city, page);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<UserResponse>> getUserByDynamicFilter(
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String nationality,
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) Byte age,
+            @RequestParam(defaultValue = "1") int page
+    ) {
+        log.info("Fetching users with dynamic filters");
+
+        Page<UserResponse> responses = userService.getUserByDynamicFilter(gender, nationality, country, state, city, age, page);
+
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 

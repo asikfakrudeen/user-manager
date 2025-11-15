@@ -90,20 +90,34 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
+    public UserResponse getUserByMobileNumber(Long mobileNumber) {
+        Optional<User> user = userRepository.getUserByMobileNumber(mobileNumber);
+        if (user.isPresent()) {
+            return userMapper.mapToUserResponse(user.get());
+        }
+        else {
+            throw new RuntimeException("Data not found");
+        }
+    }
+
+    @Override
     public void removeAllUsers() {
         userRepository.deleteAll();
     }
 
     @Override
-    public List<UserResponse> getUserByFilter(String country, String state, String city, int page) {
+    public Page<UserResponse> getUserByFilter(String country, String state, String city, int page) {
         int pageSize = 5;
         Pageable pageable = PageRequest.of(page-1, pageSize);
-        List<User> users = userRepository.findByCountryAndStateAndCity(country, state, city, pageable);
-        List<UserResponse> userResponses = new ArrayList<>();
-        for (User user : users){
-            UserResponse userResponse = userMapper.mapToUserResponse(user);
-            userResponses.add(userResponse);
-        }
-        return userResponses;
+        Page<User> userPage = userRepository.findByCountryAndStateAndCity(country, state, city, pageable);
+        return userPage.map(userMapper::mapToUserResponse);
+    }
+
+    @Override
+    public Page<UserResponse> getUserByDynamicFilter(String gender, String nationality, String country, String state, String city, Byte age, int page) {
+        int pageSize = 5;
+        Pageable pageable = PageRequest.of(page-1, pageSize);
+        Page<User> userPage = userRepository.findByDynamicFilter(gender, nationality, country, state, city, age, pageable);
+        return userPage.map(userMapper::mapToUserResponse);
     }
 }
