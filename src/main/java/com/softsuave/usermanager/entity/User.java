@@ -1,13 +1,9 @@
 package com.softsuave.usermanager.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,7 +49,19 @@ public class User {
     @Column(nullable = false)
     private String city;
 
-    List<Account> accountDetails;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Account> accountDetails = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CreditCard> creditCards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<DebitCard> debitCards = new ArrayList<>();
+
+    public void addCreditCard(CreditCard card) {
+        creditCards.add(card);
+        card.setOwner(this);
+    }
 
     public User() {
     }

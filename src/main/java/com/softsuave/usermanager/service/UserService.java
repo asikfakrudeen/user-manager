@@ -2,6 +2,7 @@ package com.softsuave.usermanager.service;
 
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
+import com.softsuave.usermanager.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,4 +29,6 @@ public interface UserService {
     Page<UserResponse> getUserByFilter(String country, String state, String city, int page);
 
     Page<UserResponse> getUserByDynamicFilter(String gender, String nationality, String country, String state, String city, Byte age, int page);
+
+    User addPerson(User user);
 }

@@ -2,26 +2,68 @@ package com.softsuave.usermanager.entity;
 
 import com.softsuave.usermanager.enums.CardNetwork;
 import com.softsuave.usermanager.enums.CardType;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "debit_cards")
 public class DebitCard {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(length = 36)
+    private String id;
+
+    @Column(nullable = false, unique = true)
     private String cardNumber;
+
     private LocalDate issueDate;
     private LocalDate expiryDate;
     private String cvv;
+
+    @Enumerated(EnumType.STRING)
     private CardNetwork cardNetwork;
-    private String bankName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
+
+    @Enumerated(EnumType.STRING)
     private CardType cardType;
+
     private boolean hasEmvChip;
     private boolean hasMagneticStripe;
     private boolean isContactlessEnabled;
-    private String linkedAccountNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    private Account linkedAccount;
+
     private double maximumWithdraw;
     private double availableBalance;
 
+    // inside DebitCard.java
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
     public DebitCard() {}
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCardNumber() {
         return cardNumber;
@@ -63,12 +105,12 @@ public class DebitCard {
         this.cardNetwork = cardNetwork;
     }
 
-    public String getBankName() {
-        return bankName;
+    public Bank getBank() {
+        return bank;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 
     public CardType getCardType() {
@@ -103,12 +145,12 @@ public class DebitCard {
         isContactlessEnabled = contactlessEnabled;
     }
 
-    public String getLinkedAccountNumber() {
-        return linkedAccountNumber;
+    public Account getLinkedAccount() {
+        return linkedAccount;
     }
 
-    public void setLinkedAccountNumber(String linkedAccountNumber) {
-        this.linkedAccountNumber = linkedAccountNumber;
+    public void setLinkedAccount(Account linkedAccount) {
+        this.linkedAccount = linkedAccount;
     }
 
     public double getMaximumWithdraw() {
@@ -125,5 +167,25 @@ public class DebitCard {
 
     public void setAvailableBalance(double availableBalance) {
         this.availableBalance = availableBalance;
+    }
+
+    @Override
+    public String toString() {
+        return "DebitCard{" +
+                "id='" + id + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", issueDate=" + issueDate +
+                ", expiryDate=" + expiryDate +
+                ", cvv='" + cvv + '\'' +
+                ", cardNetwork=" + cardNetwork +
+                ", bank=" + bank +
+                ", cardType=" + cardType +
+                ", hasEmvChip=" + hasEmvChip +
+                ", hasMagneticStripe=" + hasMagneticStripe +
+                ", isContactlessEnabled=" + isContactlessEnabled +
+                ", linkedAccount=" + linkedAccount +
+                ", maximumWithdraw=" + maximumWithdraw +
+                ", availableBalance=" + availableBalance +
+                '}';
     }
 }

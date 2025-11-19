@@ -2,6 +2,7 @@ package com.softsuave.usermanager.controller;
 
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
+import com.softsuave.usermanager.entity.User;
 import com.softsuave.usermanager.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,14 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/addPerson")
+    public ResponseEntity<User> addPerson(@RequestBody User user){
+        log.info("API hit successful and received payload : {} ",user.toString());
+        User response = userService.addPerson(user);
+        log.info("Returning response : {} ", response.toString());
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/createUser")
