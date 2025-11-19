@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -51,6 +52,8 @@ public class User {
 
     @Column(nullable = false)
     private String city;
+
+    List<Account> accountDetails;
 
     public User() {
     }
