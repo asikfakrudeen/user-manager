@@ -1,11 +1,16 @@
 package com.softsuave.usermanager.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "banks")
+@Getter
+@Setter
 public class Bank {
 
     @Id
@@ -46,43 +51,6 @@ public class Bank {
     private List<Account> accounts = new ArrayList<>();
 
     public Bank() {}
-
-    // getters and setters (generate or use Lombok)
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getSwift() { return swift; }
-    public void setSwift(String swift) { this.swift = swift; }
-
-    public String getBankName() { return bankName; }
-    public void setBankName(String bankName) { this.bankName = bankName; }
-
-    public String getBranchName() { return branchName; }
-    public void setBranchName(String branchName) { this.branchName = branchName; }
-
-    public String getBranchCode() { return branchCode; }
-    public void setBranchCode(String branchCode) { this.branchCode = branchCode; }
-
-    public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
-
-    public String getBankAddress() { return bankAddress; }
-    public void setBankAddress(String bankAddress) { this.bankAddress = bankAddress; }
-
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
-
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
-
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
-
-    public Long getPinCode() { return pinCode; }
-    public void setPinCode(Long pinCode) { this.pinCode = pinCode; }
-
-    public List<Account> getAccounts() { return accounts; }
-    public void setAccounts(List<Account> accounts) { this.accounts = accounts; }
 
     public void addAccount(Account account) {
         accounts.add(account);

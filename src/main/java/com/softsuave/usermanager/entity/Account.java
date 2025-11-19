@@ -3,12 +3,16 @@ package com.softsuave.usermanager.entity;
 import com.softsuave.usermanager.enums.AccountStatus;
 import com.softsuave.usermanager.enums.AccountType;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "accounts")
+@Getter
+@Setter
 public class Account {
 
     @Id
@@ -36,7 +40,7 @@ public class Account {
     private User customer;
 
     // account belongs to a bank/branch
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "bank_id")
     private Bank bank;
 
@@ -55,83 +59,9 @@ public class Account {
         if (card.getOwner() == null) card.setOwner(this.customer);
     }
 
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public User getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(User customer) {
-        this.customer = customer;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getAccountHolderName() {
-        return accountHolderName;
-    }
-
-    public void setAccountHolderName(String accountHolderName) {
-        this.accountHolderName = accountHolderName;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
-    }
-
-    public AccountStatus getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(AccountStatus accountStatus) {
-        this.accountStatus = accountStatus;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    public String getAccountOpeningDate() {
-        return accountOpeningDate;
-    }
-
-    public void setAccountOpeningDate(String accountOpeningDate) {
-        this.accountOpeningDate = accountOpeningDate;
-    }
-
-    public List<CreditCard> getCreditCardDetails() {
-        return creditCardDetails;
-    }
-
-    public void setCreditCardDetails(List<CreditCard> creditCardDetails) {
-        this.creditCardDetails = creditCardDetails;
-    }
-
-    public List<DebitCard> getDebitCardDetails() {
-        return debitCardDetails;
-    }
-
-    public void setDebitCardDetails(List<DebitCard> debitCardDetails) {
-        this.debitCardDetails = debitCardDetails;
+    public void addDebitCard(DebitCard card) {
+        debitCardDetails.add(card);
+        card.setLinkedAccount(this);
+        if (card.getOwner() == null) card.setOwner(this.customer);
     }
 }
