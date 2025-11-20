@@ -31,14 +31,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/addPerson")
-    public ResponseEntity<User> addPerson(@RequestBody User user){
-        log.info("API hit successful and received payload : {} ",user.toString());
-        User response = userService.addPerson(user);
-        log.info("Returning response : {} ", response.toString());
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
     @PostMapping("/createUser")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
         log.info("API hit successful and received payload : {} ",userRequest.toString());

@@ -120,9 +120,4 @@ public class UserServiceImp implements UserService{
         Page<User> userPage = userRepository.findByDynamicFilter(gender, nationality, country, state, city, age, pageable);
         return userPage.map(userMapper::mapToUserResponse);
     }
-
-    @Override
-    public User addPerson(User user) {
-        return userRepository.save(user);
-    }
 }

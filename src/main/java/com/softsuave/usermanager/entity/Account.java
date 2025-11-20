@@ -37,7 +37,7 @@ public class Account {
     // central: account belongs to a user (customer)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private User customer;
+    private Customer customer;
 
     // account belongs to a bank/branch
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

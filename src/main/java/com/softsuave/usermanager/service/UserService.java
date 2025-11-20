@@ -29,6 +29,4 @@ public interface UserService {
     Page<UserResponse> getUserByFilter(String country, String state, String city, int page);
 
     Page<UserResponse> getUserByDynamicFilter(String gender, String nationality, String country, String state, String city, Byte age, int page);
-
-    User addPerson(User user);
 }
