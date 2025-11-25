@@ -2,6 +2,7 @@ package com.softsuave.usermanager.service;
 
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
+import com.softsuave.usermanager.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

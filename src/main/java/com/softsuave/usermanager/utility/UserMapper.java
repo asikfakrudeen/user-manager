@@ -3,6 +3,7 @@ package com.softsuave.usermanager.utility;
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
 import com.softsuave.usermanager.entity.User;
+import com.softsuave.usermanager.enums.Gender;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,9 +12,9 @@ public class UserMapper {
     public User mapToUserEntity(UserRequest dto){
         User user = new User();
         user.setPin(dto.getPin());
-        user.setFirstNAme(dto.getFirstName());
+        user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setGender(dto.getGender());
+        user.setGender(Gender.MALE);
         user.setAge(dto.getAge());
         user.setGmail(dto.getGmail());
         user.setMobileNumber(dto.getMobileNumber());
