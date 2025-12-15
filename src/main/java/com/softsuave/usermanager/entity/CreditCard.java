@@ -49,7 +49,7 @@ public class CreditCard {
     // Owning side -> many cards to one account
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
-    private Account linkedAccount;
+    private Account account;
 
     // Owning side -> many cards to one owner
     @ManyToOne(fetch = FetchType.LAZY)

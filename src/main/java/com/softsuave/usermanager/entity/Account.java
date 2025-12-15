@@ -45,23 +45,23 @@ public class Account {
     private Bank bank;
 
     // cards linked to this account (optional: user may own card but card linked to account)
-    @OneToMany(mappedBy = "linkedAccount", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CreditCard> creditCardDetails = new ArrayList<>();
-
-    @OneToMany(mappedBy = "linkedAccount", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<DebitCard> debitCardDetails = new ArrayList<>();
+//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<CreditCard> creditCards = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<DebitCard> debitCards = new ArrayList<>();
 
     public Account() {}
 
-    public void addCreditCard(CreditCard card) {
-        creditCardDetails.add(card);
-        card.setLinkedAccount(this);
-        if (card.getOwner() == null) card.setOwner(this.customer);
-    }
-
-    public void addDebitCard(DebitCard card) {
-        debitCardDetails.add(card);
-        card.setLinkedAccount(this);
-        if (card.getOwner() == null) card.setOwner(this.customer);
-    }
+//    public void addCreditCard(CreditCard card) {
+//        creditCards.add(card);
+//        card.setAccount(this);
+//        if (card.getOwner() == null) card.setOwner(this.customer);
+//    }
+//
+//    public void addDebitCard(DebitCard card) {
+//        debitCards.add(card);
+//        card.setLinkedAccount(this);
+//        if (card.getOwner() == null) card.setOwner(this.customer);
+//    }
 }

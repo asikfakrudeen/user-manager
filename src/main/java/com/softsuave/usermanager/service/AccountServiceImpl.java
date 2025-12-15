@@ -2,7 +2,9 @@ package com.softsuave.usermanager.service;
 
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
+import com.softsuave.usermanager.entity.Customer;
 import com.softsuave.usermanager.entity.User;
+import com.softsuave.usermanager.repository.AccountRepository;
 import com.softsuave.usermanager.repository.UserRepository;
 import com.softsuave.usermanager.utility.UserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,21 +23,21 @@ import java.util.Optional;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     private final UserMapper userMapper;
 
-    public AccountServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
+    public AccountServiceImpl(AccountRepository accountRepository, UserMapper userMapper) {
+        this.accountRepository = accountRepository;
         this.userMapper = userMapper;
     }
 
     @Override
-    public User addPerson(User user) {
-        return userRepository.save(user);
+    public Customer addPerson(Customer customer) {
+        return accountRepository.save(customer);
     }
 
     @Override
     public void removePerson() {
-        userRepository.deleteAll();
+        accountRepository.deleteAll();
     }
 }

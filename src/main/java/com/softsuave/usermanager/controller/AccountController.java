@@ -2,6 +2,7 @@ package com.softsuave.usermanager.controller;
 
 import com.softsuave.usermanager.dto.UserRequest;
 import com.softsuave.usermanager.dto.UserResponse;
+import com.softsuave.usermanager.entity.Customer;
 import com.softsuave.usermanager.entity.User;
 import com.softsuave.usermanager.service.AccountService;
 import com.softsuave.usermanager.service.UserService;
@@ -33,9 +34,9 @@ public class AccountController {
     }
 
     @PostMapping("/addPerson")
-    public ResponseEntity<User> addPerson(@RequestBody User user) {
-        log.info("API hit successful and received payload : {} ", user.toString());
-        User response = accountService.addPerson(user);
+    public ResponseEntity<Customer> addPerson(@RequestBody Customer customer) {
+        log.info("API hit successful and received payload : {} ", customer.toString());
+        Customer response = accountService.addPerson(customer);
         log.info("Returning response : {} ", response.toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
